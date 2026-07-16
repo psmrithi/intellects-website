@@ -1,16 +1,21 @@
 INTELLECTS Club Website
 
-A single-page site for the INTELLECTS Club (Dept. of CSE, SRM IST Ramapuram),
-built as plain HTML + CSS + JavaScript — no frameworks, no build step.
+A single-page site for the INTELLECTS Club (SRM Institute of Science and
+Technology, Ramapuram Campus), built as plain HTML + CSS + JavaScript —
+no frameworks, no build step.
+
+Live site: https://psmrithi.github.io/intellects-website/
+Repo: https://github.com/psmrithi/intellects-website
 
 intellects-website/
 ├── index.html   → all page content & structure
 ├── style.css    → all styling (design tokens at the top)
-├── script.js    → nav toggle, heatmap animation, counters, scroll reveal
+├── script.js    → nav toggle, counters, scroll reveal, card glow/tilt, join form
+├── photos/      → real team member photos (referenced by index.html)
 └── README.md    → this file
 
-Everything is separated exactly as requested: markup, styling and behaviour
-live in their own files and are linked from index.html.
+Everything is separated: markup, styling, and behaviour live in their own
+files and are linked from index.html.
 
 
 1. Run it locally
@@ -37,113 +42,110 @@ Option C — Node
 bashnpx serve intellects-website
 
 
-2. What you still need to fill in
-
-I've built the full structure and design, but researching the club is
-part of the assignment — I deliberately left these as clearly marked
-TODOs rather than inventing facts about real people/events:
-
-WhereWhat to doindex.html → #aboutReplace mission/vision text with the club's actual wordingindex.html → #leadsDuplicate a .team-card block per real member (President, VP, domain leads). Add real names, roles, LinkedIn/GitHub linksindex.html → #logReplace/add <li class="commit"> entries with real past events (dates, names) from Instagram/LinkedInindex.html → #achievementsReplace .release-card placeholders with real wins/milestonesindex.html → #feedEmbed real LinkedIn/Instagram posts (see below)script.js → stats sectionUpdate member count / events / founding year with real numbersREADME.md (bottom) & footerAdd your GitHub repo link + deployed site URL
-
-How to embed a real LinkedIn post
+2. What's already done
 
 
-Open the post on the club's LinkedIn page.
-Click the ... menu on the post → Embed this post.
-LinkedIn gives you an <iframe> snippet — paste it in place of a
-.feed-card in index.html.
-Only posts the page admin has enabled embedding for will work — if a
-post can't be embedded, use a screenshot + link instead.
+Hero, About (mission/vision), Why Join, Team, Past Events, Upcoming
+Events, FAQ, and a membership sign-up form
+Dark violet + coral theme, distinct from typical navy/teal tech-club
+palettes
+Real photos for all 11 board members (faculty advisor uses initials only)
+UI polish: cursor-tracked glow on cards, 3D tilt on team cards, button
+shine sweep, breathing hero badge, pulsing timeline dots, animated stat
+counters, scroll-reveal animations
+Fully responsive, keyboard-focus visible, respects prefers-reduced-motion
 
 
-Instagram posts
+3. What's still left to finish
 
-Instagram embeds work the same way: open the post → ... → Embed
-→ paste the provided <blockquote class="instagram-media"> snippet
-(you'll also need Instagram's embed script — see their embed dialog for
-the exact <script> tag to add before </body>).
+WhereWhat to doindex.html → #leads (faculty card)Confirm "Prof. Dapne" is the correct spellingindex.html → #faqTwo answers still marked TODO — event frequency & certificate policy, confirm with leadershipscript.js → join formCurrently opens an email draft with the visitor's details. Connect to Google Forms or Formspree for real data collection (see below)script.js → stats sectionUpdate member count / events / domains if the real numbers change
 
 
-3. Push it to GitHub
+4. About the membership form
 
-bashcd intellects-website
-git init
-git add .
-git commit -m "Initial commit: INTELLECTS club website"
-git branch -M main
-git remote add origin https://github.com/YOUR-USERNAME/YOUR-REPO.git
-git push -u origin main
-
-Then commit again each time you add real content — that's the point of
-the challenge:
-
-bashgit add .
-git commit -m "Add real team bios and event history"
-git push
-
-
-4. Deploy it (free, via GitHub Pages)
-
-
-On GitHub, go to your repo → Settings → Pages.
-Under Build and deployment, set Source to Deploy from a branch.
-Choose branch main, folder / (root) → Save.
-Wait ~1 minute, then your site is live at:
-https://YOUR-USERNAME.github.io/YOUR-REPO/
-Paste that URL into:
-
-your repo's About section (gear icon on the repo homepage → Website field)
-the footer of index.html (#deployLink) and script.js (deployLink.href)
-your submission message, as required by the challenge
-
-
-
-
-
-
-5. What you still need to double-check
-
-WhatWhyFaculty advisor name "Prof. Dapne"This spelling looked unusual — please confirm it's correct before publishingTeam members' LinkedIn URLsAll currently href="#" placeholders — search LinkedIn ↗ in index.htmlFAQ answers marked TODOEvent frequency and certificate policy need confirming with leadershipUpcoming eventsMarked "unverified" — sourced from a demo admin panel, not a confirmed listJoin form backendSee below — currently opens an email draft, not saved anywhere
-
-6. About the membership form
-
-The site has no backend or database (it's just static files hosted on GitHub
-Pages), so the "Become a member" form currently works by opening the
+The site has no backend or database (it's just static files hosted on
+GitHub Pages), so the "Become a member" form currently works by opening the
 visitor's email app with their details pre-filled, addressed to
-INTELLECTS@SRMIST.EDU.IN. That works, but it relies on the visitor actually
-hitting send, and doesn't give you a spreadsheet of responses.
+INTELLECTS@SRMIST.EDU.IN. That works, but it relies on the visitor
+actually hitting send, and doesn't give you a spreadsheet of responses.
 
 Before this goes live for real signups, pick one:
 
 
 Google Forms — quickest. Create a Form with matching fields, then
 either swap in the Form's embed code, or update script.js to POST to
-its response URL (there are tutorials for "submit Google Form via
-JavaScript fetch").
+its response URL.
 Formspree (formspree.io) — free tier, no backend needed. Sign up, get
-a form endpoint URL, and replace the mailto: logic in the join form
+a form endpoint URL, and replace the mailto: logic in the join-form
 section of script.js with a fetch() call to that endpoint.
 Your own backend — if you want full control and a real database.
 
 
-The exact spot to edit is marked with a TODO comment in script.js.
+5. Adding or updating a team photo
 
-7. Design notes
+
+Drop the photo into the photos/ folder (square images work best —
+the CSS crops to a circle automatically).
+In index.html, find that person's .team-card, and point the <img>
+src at the new file:
+
+
+html   <div class="team-card__avatar"><img src="photos/yourfile.jpg" alt="Full Name"></div>
+
+6. Updating past / upcoming events
+
+
+Past events live in the <ol class="timeline"> inside #log —
+duplicate an <li class="timeline__item"> block per event.
+Upcoming events live in the .event-grid inside #upcoming —
+duplicate a .event-card block per event.
+
+
+
+7. Pushing changes to GitHub
+
+bashcd intellects-website
+git add .
+git commit -m "describe what you changed"
+git push
+
+If this is a brand new clone/folder that isn't connected to GitHub yet:
+
+bashgit init
+git add .
+git commit -m "Initial commit: INTELLECTS club website"
+git branch -M main
+git remote add origin https://github.com/psmrithi/intellects-website.git
+git push -u origin main
+
+8. Deploying (GitHub Pages)
+
+
+On GitHub, go to the repo → Settings → Pages.
+Under Build and deployment, set Source to Deploy from a branch.
+Choose branch main, folder / (root) → Save.
+Wait ~1 minute — the site goes live at:
+https://psmrithi.github.io/intellects-website/
+
+
+
+9. Design notes
 
 Dark theme with a violet + coral identity — chosen to be distinct from
 generic tech-club palettes (no navy/teal, no black/neon-green).
 
 
-Hero — a rotating "orbit" badge symbolizing the club's network/community.
-Benefits section answers "why join" directly: real projects, new tech,
-leadership roles, networking.
-Team grid includes all 12 board members plus the faculty advisor.
-Past events are a chronological timeline of verified activity.
-Upcoming events are clearly flagged as unverified.
+Hero — a rotating, breathing "orbit" badge symbolizing the club's
+network/community.
+Benefits section answers "why join" directly: real projects, new
+tech, leadership roles, networking.
+Team grid includes all board members plus the faculty advisor, with
+a cursor-tracked glow and subtle 3D tilt on hover.
+Past events are a chronological timeline with pulsing markers.
 FAQ uses native <details>/<summary> — accessible, no JS required.
 Typography: Sora (display), Inter (body), Space Mono (labels).
-Fully responsive, keyboard-focus visible, respects prefers-reduced-motion.
 
 
 Restyle colors in the :root block at the top of style.css — everything
 derives from those tokens (--violet, --coral, --mint, --bg).
+Contentindex (6).htmlhtmlstyle (1).css295 linescssscript (1).js138 linesjsREADME (7).md157 linesmd
